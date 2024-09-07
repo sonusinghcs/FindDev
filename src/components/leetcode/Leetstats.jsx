@@ -2,22 +2,28 @@ import React, { useState } from 'react'
 
 function Leetstats() {
     const [username,setusername] = useState("")
-    const url = `https://leetcode-stats-api.herokuapp.com/${username}`
-    async function getuserdata(url){
+    
+    async function getuserdata(username){
         try{
-            const response = await fetch(url);
-            const data= await response.json();
-            console.log(data)
-            return data
-        }catch(error){
-            console.error('There has been a problem with your fetch operation:', error);
-        }
+            const response = await fetch("http://localhost:5000/leetcode",{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username}),
+            });
+            const data = await (response.json());
+            console.log(data.data.matchedUser)
+            return data.data.matchedUser
+        }catch(e){}
     }
-    const [userdata,setData] = useState("")
+    const [userdata,setData] = useState()
     async function handleclick(){
-        const data = await getuserdata(url);
+        const data = await getuserdata(username);
         if(data){
             setData(data)
+            console.log("function",userdata.profile.userAvatar)
+
         }
     }
 
@@ -32,15 +38,39 @@ function Leetstats() {
         className='text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 m-4'
         
         onClick={handleclick}>Get User Data</button>
-        <div className='w-full max-w-m h-100 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700'>
-        {username && <p className=" text-gray-500 dark:text-white">Username: {username}</p>}
-        {userdata && <p className=" text-gray-500 dark:text-white">Total solve :{userdata.totalSolved}</p>}
-        {userdata && <p className=" text-gray-500 dark:text-white">Ranking : {userdata.ranking}</p>}
-        {userdata && <p className=" text-gray-500 dark:text-white">Easy Solved : {userdata.easySolved}</p>}
-        {userdata && <p className=" text-gray-500 dark:text-white">Medium Solved : {userdata.mediumSolved}</p>}
-        {userdata && <p className=" text-gray-500 dark:text-white">Hard Solved : {userdata.hardSolved}</p>}
-        {userdata && <p className=" text-gray-500 dark:text-white">Acceptance Rate : {userdata.acceptanceRate}</p>}
+        
+        {userdata && <div>
+        
+        
+    
+        
+        
+        
+      
+
+        <div className="
+         bg-gradient-to-br from-indigo-600 to-pink-600 p-1
+        
+        
+        w-full max-w-m h-100 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            
+            <div className="flex flex-col items-center pb-10">
+                <img className="w-58 h-55  mb-3 rounded-full shadow-lg m-5" src={userdata.profile.userAvatar} alt="Bonnie image"/>
+                <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white m-4"> {userdata?.username}</h5>
+                <span className="dark:text-white">Ranking : {userdata.profile.ranking}</span><span className=" text-gray-500 dark:text-white">All Question Solve : {userdata.submitStats.acSubmissionNum[0].count}</span>
+                <span className=" text-gray-500 dark:text-white">Easy Question : {userdata.submitStats.acSubmissionNum[1].count}</span>
+                <span className=" text-gray-500 dark:text-white">Medium Question : {userdata.submitStats.acSubmissionNum[2].count}</span>
+                <span className=" text-gray-500 dark:text-white">Hard Question : {userdata.submitStats.acSubmissionNum[3].count}</span>
+                <div className="flex mt-4 md:mt-6">
+                    <a href={`https://leetcode.com/u/${userdata.username}/`} className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    target="_blank">Go to profile</a>
+                   
+                </div>
+            </div>
         </div>
+        
+                
+            </div>}
         
     </div>
     </>

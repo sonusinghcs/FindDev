@@ -48,7 +48,11 @@ function Github() {
         
       
 
-<div className="w-full max-w-m h-100 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div className="
+bg-gradient-to-br from-indigo-600 to-pink-600 p-1
+
+
+w-full max-w-m h-100 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     
     <div className="flex flex-col items-center pb-10">
         <img className="w-60 h-60 mb-3 rounded-full shadow-lg m-5" src={userdata.avatar_url} alt="Bonnie image"/>
