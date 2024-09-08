@@ -5,7 +5,7 @@ function Leetstats() {
     
     async function getuserdata(username){
         try{
-            const response = await fetch("http://localhost:5000/leetcode",{
+            const response = await fetch("https://leetcodeserver.onrender.com/leetcode",{
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
